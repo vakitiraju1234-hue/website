@@ -1,10 +1,9 @@
-steps:
 # Build Docker Image
 - name: 'gcr.io/cloud-builders/docker'
   args: [
     'build',
     '-t',
-    'asia-south2-docker.pkg.dev/my-project-new-490705/myrepo/app',
+    'asia-south1-docker.pkg.dev/loadbalancer-502408/rvmyrepo/app',
     '.'
   ]
 
@@ -12,15 +11,15 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: [
     'push',
-    'asia-south2-docker.pkg.dev/my-project-new-490705/myrepo/app'
+    'asia-south1-docker.pkg.dev/loadbalancer-502408/rvmyrepo/app'
   ]
 
 # Deploy to GKE
 - name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', 'k8s.yaml']
   env:
-  - 'CLOUDSDK_COMPUTE_REGION=asia-south2'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=my-cluster'
+  - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=rv-cluster'
 
 #  ADD THIS
 options:
