@@ -1,26 +1,18 @@
-# Build Docker Image
-- name: 'gcr.io/cloud-builders/docker'
-  args: [
-    'build',
-    '-t',
-    'asia-south1-docker.pkg.dev/loadbalancer-502408/rvmyrepo/app',
-    '.'
-  ]
+steps:
+  # Build Docker Image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'asia-south1-docker.pkg.dev/loadbalancer-502408/rvmyrepo/app', '.']
 
-# Push Image
-- name: 'gcr.io/cloud-builders/docker'
-  args: [
-    'push',
-    'asia-south1-docker.pkg.dev/loadbalancer-502408/rvmyrepo/app'
-  ]
+  # Push Image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'asia-south1-docker.pkg.dev/loadbalancer-502408/rvmyrepo/app']
 
-# Deploy to GKE
-- name: 'gcr.io/cloud-builders/kubectl'
-  args: ['apply', '-f', 'k8s.yaml']
-  env:
-  - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=rv-cluster'
+  # Deploy to GKE
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['apply', '-f', 'k8s.yaml']
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=rv-cluster'
 
-#  ADD THIS
 options:
   logging: CLOUD_LOGGING_ONLY
